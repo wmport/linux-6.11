@@ -8,6 +8,7 @@
 
 #include <dt-bindings/gpio/gpio.h>
 #include <dt-bindings/input/input.h>
+#include <dt-bindings/soc/rockchip,vop2.h>
 #include <dt-bindings/pinctrl/rockchip.h>
 #include <dt-bindings/usb/pd.h>
 #include "rk3588.dtsi"
@@ -339,9 +340,6 @@
 	};
 };
 
-&vop {
-	status = "okay";
-};
 
 &vp0 {
 	vp0_out_hdmi0: endpoint@ROCKCHIP_VOP2_EP_HDMI0 {
@@ -350,6 +348,9 @@
 	};
 };
 
+&vop {
+	status = "okay";
+};
 &gmac0 {
 	clock_in_out = "output";
 	phy-handle = <&rgmii_phy>;
