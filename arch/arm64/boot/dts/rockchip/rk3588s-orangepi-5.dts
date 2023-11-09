@@ -3,6 +3,7 @@
 /dts-v1/;
 
 #include <dt-bindings/pinctrl/rockchip.h>
+#include <dt-bindings/soc/rockchip,vop2.h>
 #include <dt-bindings/gpio/gpio.h>
 #include <dt-bindings/input/input.h>
 #include <dt-bindings/usb/pd.h>
@@ -113,6 +114,17 @@
 			label = "back";
 			linux,code = <KEY_BACK>;
 			press-threshold-microvolt = <1235000>;
+		};
+	};
+
+	hdmi-con {
+		compatible = "hdmi-connector";
+		type = "a";
+
+		port {
+			hdmi_con_in: endpoint {
+				remote-endpoint = <&hdmi0_out_con>;
+			};
 		};
 	};
 
@@ -304,6 +316,44 @@
 	cpu-supply = <&vdd_cpu_lit_s0>;
 	mem-supply = <&vdd_cpu_lit_mem_s0>;
 };
+
+
+    &hdmi0 {
+        enable-gpios = <&gpio4 RK_PB1 GPIO_ACTIVE_HIGH>;
+        status = "okay";
+    };
+
+
+    &hdptxphy_hdmi0 {
+        status = "okay";
+    };
+
+    &vop_mmu {
+        status = "okay";
+    };
+
+    &hdmi0_in {
+        hdmi0_in_vp0: endpoint {
+            remote-endpoint = <&vp0_out_hdmi0>;
+        };
+    };
+
+    &hdmi0_out {
+        hdmi0_out_con: endpoint {
+            remote-endpoint = <&hdmi_con_in>;
+        };
+    };
+
+    &vop {
+        status = "okay";
+    };
+
+    &vp0 {
+        vp0_out_hdmi0: endpoint@ROCKCHIP_VOP2_EP_HDMI0 {
+            reg = <ROCKCHIP_VOP2_EP_HDMI0>;
+            remote-endpoint = <&hdmi0_in_vp0>;
+        };
+    };
 
 &i2c0 {
 	pinctrl-names = "default";
